@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://55eh8f2voxws"]
+
+[ext_resource type="Script" uid="uid://bnu1grsufumeq" path="res://scripts/lobby.gd" id="1_o1atq"]
+
+[node name="lobby" type="Node2D"]
+script = ExtResource("1_o1atq")
+
+[node name="Host" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 439.0
+offset_top = 129.0
+offset_right = 518.0
+offset_bottom = 152.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Host"
+
+[node name="Join" type="Button" parent="."]
+offset_left = 440.0
+offset_top = 205.0
+offset_right = 515.0
+offset_bottom = 225.0
+text = "Join"
+
+[connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
