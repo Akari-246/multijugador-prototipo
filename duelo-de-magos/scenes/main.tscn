@@ -2,32 +2,40 @@
 
 [ext_resource type="Script" uid="uid://bay1n74uacmxx" path="res://scripts/main.gd" id="1_o5qli"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_o5qli")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 278.0
-offset_top = 94.0
-offset_right = 808.0
-offset_bottom = 543.0
-theme_override_constants/separation = 26
+layout_mode = 0
+offset_left = 162.0
+offset_top = 156.0
+offset_right = 1006.0
+offset_bottom = 254.0
+theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Elige un lobby para multijugador"
+theme_override_font_sizes/font_size = 23
+text = "Elija un lobby multijugador"
+horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
-alignment = 1
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_constants/separation = 10
 
 [node name="BtnSteam" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "   Steam   "
+theme_override_font_sizes/font_size = 21
+text = "    Steam    "
 
 [node name="BtnLan" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "   LAN   "
+theme_override_font_sizes/font_size = 21
+text = "     LAN     "
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/BtnSteam" to="." method="_on_btn_steam_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/BtnLan" to="." method="_on_btn_lan_pressed"]

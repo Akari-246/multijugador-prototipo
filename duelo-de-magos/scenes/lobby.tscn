@@ -5,30 +5,58 @@
 [node name="lobby" type="Node2D"]
 script = ExtResource("1_o1atq")
 
+[node name="StatusLabel" type="Label" parent="."]
+offset_right = 203.0
+offset_bottom = 23.0
+
+[node name="ip" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 104.0
+offset_right = 227.0
+offset_bottom = 127.0
+text = "IP:"
+
+[node name="port" type="Label" parent="."]
+offset_left = 332.0
+offset_top = 104.0
+offset_right = 535.0
+offset_bottom = 127.0
+text = "PORT:"
+
+[node name="IPInput" type="LineEdit" parent="."]
+offset_left = 24.0
+offset_top = 137.0
+offset_right = 226.0
+offset_bottom = 168.0
+text = "127.0.0.1"
+
+[node name="PortInput" type="LineEdit" parent="."]
+offset_left = 328.0
+offset_top = 137.0
+offset_right = 530.0
+offset_bottom = 168.0
+text = "66666"
+
 [node name="Host" type="Button" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 439.0
-offset_top = 129.0
-offset_right = 518.0
-offset_bottom = 152.0
+offset_left = 500.0
+offset_top = 253.0
+offset_right = 602.0
+offset_bottom = 296.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Host"
 
 [node name="Join" type="Button" parent="."]
-offset_left = 440.0
-offset_top = 205.0
-offset_right = 515.0
-offset_bottom = 225.0
+offset_left = 501.0
+offset_top = 333.0
+offset_right = 605.0
+offset_bottom = 372.0
 text = "Join"
-
-[node name="AddressInput" type="LineEdit" parent="."]
-offset_right = 153.0
-offset_bottom = 31.0
 
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
