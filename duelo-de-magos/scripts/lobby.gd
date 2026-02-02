@@ -20,8 +20,21 @@ func peer_connected(id):
 func server_connected():
 	get_tree().change_scene_to_file("res://scenes/game.tscn")
 
-"""func addPlayer(id = 1):
-	var playerI = player.instantiate()
-	playerI.name = str(id)
-	call_deferred("add_child", playerI)
+"""extends Node2D
+
+func _on_host_pressed() -> void:
+	Global.create_server()
+	multiplayer.peer_connected.connect(peer_connected)
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+
+func _on_join_pressed() -> void:
+	var address = $AddressInput.text
+	Global.join_server(address)
+	multiplayer.connected_to_server.connect(server_connected)
+
+func peer_connected(id):
+	print("Jugador conectado: ", id)
+	
+func server_connected():
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
 """

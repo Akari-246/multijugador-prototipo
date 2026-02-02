@@ -5,7 +5,12 @@ extends Node2D
 @onready var players = $MultiplayerSpawner/Players
 
 func _ready():
-	await get_tree().create_timer(0.1).timeout
+	#await get_tree().create_timer(0.1).timeout
+	await get_tree().process_frame
+	
+	if multiplayer.multiplayer_peer == null:
+		push_error("No hay peer conectado")
+		return
 	var id = multiplayer.get_unique_id()
 	addPlayer(id)
 	if multiplayer.is_server():

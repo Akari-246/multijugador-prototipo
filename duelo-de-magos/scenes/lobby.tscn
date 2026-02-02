@@ -26,5 +26,9 @@ offset_right = 515.0
 offset_bottom = 225.0
 text = "Join"
 
+[node name="AddressInput" type="LineEdit" parent="."]
+offset_right = 153.0
+offset_bottom = 31.0
+
 [connection signal="pressed" from="Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
