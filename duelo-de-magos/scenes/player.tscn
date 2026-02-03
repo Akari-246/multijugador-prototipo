@@ -154,6 +154,7 @@ animations = [{
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["player"]]
 position = Vector2(1, 0)
 scale = Vector2(0.84000045, 0.84000045)
+collision_mask = 3
 script = ExtResource("1_g2els")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
@@ -172,13 +173,14 @@ offset_bottom = -39.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_g2els")
-animation = &"walk"
+animation = &"attack"
+frame = 2
+frame_progress = 0.8495242
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -45)
 
-[node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(-1.1904756, 0)
-scale = Vector2(1.1904756, 1.1904756)
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(-38.09523, -21.428562)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

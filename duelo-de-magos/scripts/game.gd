@@ -50,7 +50,7 @@ func peer_disconnected(id: int):
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		var player_id = body.name.to_int()
-		print("💀 Jugador %s murió - Reposicionando..." % player_id)
+		print("Jugador %s murió - Reposicionando..." % player_id)
 		
 		# Llamar con deferred para evitar error de física
 		call_deferred("_respawn_player", body)

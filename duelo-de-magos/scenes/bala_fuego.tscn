@@ -1,10 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://c6667q7gjr010"]
+[gd_scene load_steps=16 format=3 uid="uid://c6667q7gjr010"]
 
 [ext_resource type="Texture2D" uid="uid://yoh3ik2sqeb5" path="res://images/proyectiles/233.png" id="1_hedj0"]
 [ext_resource type="Script" uid="uid://dkhwi4k1xk8sk" path="res://scripts/balaFuego.gd" id="1_m7gc5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7gc5"]
-size = Vector2(36, 11)
+size = Vector2(28, 11)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4tr3a"]
 atlas = ExtResource("1_hedj0")
@@ -84,13 +84,26 @@ animations = [{
 "speed": 9.0
 }]
 
-[node name="balaFuego" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4tr3a"]
+size = Vector2(38, 15)
+
+[node name="balaFuego" type="Area2D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_m7gc5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(2, -0.5)
+position = Vector2(-6, -0.5)
 shape = SubResource("RectangleShape2D_m7gc5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_naae6")
-frame_progress = 0.12177128
+frame = 2
+frame_progress = 0.51627874
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-2, -0.5)
+shape = SubResource("RectangleShape2D_4tr3a")
