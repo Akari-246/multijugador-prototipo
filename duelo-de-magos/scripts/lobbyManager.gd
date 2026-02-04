@@ -81,27 +81,33 @@ func join_steam(steam_lobby_id: int):
 
 # ========== STEAM INTERNALS ==========
 func _init_steam() -> bool:
-	#if steam_peer and steam_peer.get_connection_status() != MultiplayerPeer.CONNECTION_DISCONNECTED:
+	# Verificar que Steam esté disponible
+	if not Steam.isSteamRunning():
+		print("[LobbyManager] Error: Steam no está corriendo")
+		return false
+	
+	# Si ya está inicializado, no volver a inicializar
 	if steam_peer != null:
-		print("Steam ya está conectado")
+		print("[LobbyManager] Steam ya inicializado")
 		return true
 	
+	# Inicializar Steam
 	var status = Steam.steamInit(480, true)
 	if not status:
-		print("Error inicializando Steam")
+		print("[LobbyManager] Error inicializando Steam")
 		return false
 	
 	steam_peer = SteamMultiplayerPeer.new()
 	
-	if Steam.lobby_created.is_connected(_on_steam_lobby_created):
+	# Conectar señales solo una vez
+	if not Steam.lobby_created.is_connected(_on_steam_lobby_created):
 		Steam.lobby_created.connect(_on_steam_lobby_created)
-	if Steam.lobby_joined.is_connected(_on_steam_lobby_joined):
+	if not Steam.lobby_joined.is_connected(_on_steam_lobby_joined):
 		Steam.lobby_joined.connect(_on_steam_lobby_joined)
 	
-	#Steam.lobby_created.connect(_on_steam_lobby_created)
-	#Steam.lobby_joined.connect(_on_steam_lobby_joined)
 	Steam.initRelayNetworkAccess()
-	print("Steam inicializado :D")
+	
+	print("[LobbyManager] Steam inicializado correctamente")
 	return true
 
 func _on_steam_lobby_created(result: int, _lobby_id: int):
@@ -111,7 +117,8 @@ func _on_steam_lobby_created(result: int, _lobby_id: int):
 		return
 	
 	lobby_id = _lobby_id
-	if steam_peer.get_connection_status() == MultiplayerPeer.CONNECTION_DISCONNECTED:
+	var peer_status  =steam_peer.get_connection_status()
+	if peer_status == MultiplayerPeer.CONNECTION_DISCONNECTED:
 		steam_peer.server_relay = true
 		var error= steam_peer.create_host()
 		if error != OK:
@@ -122,7 +129,7 @@ func _on_steam_lobby_created(result: int, _lobby_id: int):
 	multiplayer.multiplayer_peer = steam_peer
 	is_host = true
 	players[1] = player_info.duplicate()
-	print("Lobby Steam creado: ", lobby_id)
+	print("[LobbyManager] Lobby Steam creado exitosamente: ", lobby_id)
 	server_created.emit()
 	player_joined.emit(1, player_info)
 
