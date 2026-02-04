@@ -31,7 +31,6 @@ func _physics_process(delta: float) -> void:
 		velocity.y += gravity * delta
 	if is_multiplayer_authority():
 		handle_input(delta)
-	
 	move_and_slide()
 	update_animations()
 
@@ -50,7 +49,6 @@ func handle_input(delta: float):
 		jump_buffer = jump_buffer_time
 	else:
 		jump_buffer -= delta
-	
 	if jump_buffer > 0 and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		jump_buffer = 0
@@ -72,7 +70,6 @@ func shoot():
 	var offset = 30
 	var shoot_direction = Vector2.RIGHT if facing_right else Vector2.LEFT
 	var shoot_position = global_position + (shoot_direction * offset)
-	
 	spawn_bullet(shoot_position, shoot_direction) #bala local
 	rpc("sync_shoot", shoot_position, shoot_direction, name.to_int())
 
@@ -92,7 +89,6 @@ func sync_shoot(pos: Vector2, dir: Vector2, shooter_id: int):
 		newBala.shooter_id = shooter_id
 		newBala.global_position = pos
 		get_tree().root.add_child(newBala)
-	
 	
 func safe_rpc(method: String, arg = null):
 	if not is_inside_tree() or multiplayer.get_peers().size() == 0:
@@ -122,7 +118,6 @@ func attack():
 	if sprite:
 		sprite.play("attack")
 	safe_rpc("remote_attack")
-	
 	if is_inside_tree():
 		get_tree().create_timer(ATTACK_DURATION + 0.1).timeout.connect(force_end_attack)
 
@@ -130,7 +125,6 @@ func attack():
 func remote_attack():
 	if not is_inside_tree():
 		return
-	
 	is_attacking = true
 	if sprite:
 		sprite.play("attack")

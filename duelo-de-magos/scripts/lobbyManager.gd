@@ -25,7 +25,6 @@ var game_started_flag: bool = false
 var players_loaded: int = 0
 var game_scene_path: String = ""
 
-# Flags de control para evitar duplicados
 var _steam_initialized: bool = false
 var _is_creating_peer: bool = false
 
@@ -43,7 +42,7 @@ func host_lan(port: int = DEFAULT_PORT):
 	
 	var error = lan_peer.create_server(port, MAX_PLAYERS)
 	if error != OK:
-		print("[LobbyManager] Error creando servidor LAN: ", error)
+		print("[LobbyManager] Hubo un error al crear el servidor LAN: ", error)
 		connection_failed.emit()
 		return
 	
@@ -66,64 +65,42 @@ func host_steam():
 func join_lan(address: String, port: int = DEFAULT_PORT):
 	current_network_type = NetworkType.LAN
 	lan_peer = ENetMultiplayerPeer.new()
-	
 	var error = lan_peer.create_client(address, port)
 	if error != OK:
-		print("[LobbyManager] Error conectando a servidor LAN: ", error)
+		print("[LobbyManager] Hubo un error conectando al servidor LAN: ", error)
 		connection_failed.emit()
 		return
-	
 	multiplayer.multiplayer_peer = lan_peer
 	print("[LobbyManager] Conectando a ", address, ":", port)
 
 func join_steam(steam_lobby_id: int):
 	current_network_type = NetworkType.STEAM
 	print("[LobbyManager] ===== INICIANDO JOIN STEAM =====")
-	
 	if not _init_steam():
 		print("[LobbyManager] ERROR: No se pudo inicializar Steam")
 		connection_failed.emit()
 		return
-	
 	lobby_id = steam_lobby_id
 	print("[LobbyManager] Intentando unirse a lobby: ", lobby_id)
 	Steam.joinLobby(lobby_id)
 
-# ========== STEAM INTERNALS ==========
 func _init_steam() -> bool:
-	# Si ya está inicializado, no repetir
 	if _steam_initialized:
-		print("[LobbyManager] Steam ya inicializado previamente")
 		return true
-	
-	print("[LobbyManager] ----- Inicializando Steam -----")
-	
+	print("[LobbyManager] ----- Iniciando Steam... -----")
 	if not Steam.isSteamRunning():
-		print("[LobbyManager] ❌ ERROR: Steam no está corriendo")
 		return false
-	
-	print("[LobbyManager] ✅ Steam está corriendo")
+	print("[LobbyManager] Steam está corriendo c:")
 	
 	var status = Steam.steamInit(480, true)
 	if not status:
-		print("[LobbyManager] ❌ ERROR inicializando Steam API")
 		return false
-	
-	print("[LobbyManager] ✅ Steam API inicializada")
-	
 	steam_peer = SteamMultiplayerPeer.new()
-	print("[LobbyManager] ✅ SteamMultiplayerPeer creado")
-	
-	# Conectar señales
 	Steam.lobby_created.connect(_on_steam_lobby_created)
 	Steam.lobby_joined.connect(_on_steam_lobby_joined)
-	print("[LobbyManager] ✅ Señales Steam conectadas")
-	
 	Steam.initRelayNetworkAccess()
-	print("[LobbyManager] ✅ Relay network access inicializado")
-	
 	_steam_initialized = true
-	print("[LobbyManager] ----- Steam inicializado correctamente -----")
+	print("[LobbyManager] ----- Steam inicializado correctamente :D -----")
 	return true
 
 func _on_steam_lobby_created(result: int, _lobby_id: int):
@@ -132,38 +109,30 @@ func _on_steam_lobby_created(result: int, _lobby_id: int):
 	print("[LobbyManager] Lobby ID: ", _lobby_id)
 	
 	if result != Steam.Result.RESULT_OK:
-		print("[LobbyManager] ❌ Error creando lobby Steam: ", result)
+		print("[LobbyManager] Hubo un error al crear el lobby Steam: ", result)
 		connection_failed.emit()
 		return
-	
 	lobby_id = _lobby_id
 	
 	if _is_creating_peer:
-		print("[LobbyManager] ⚠️ Ya estamos creando peer, ignorando...")
 		return
-	
 	_is_creating_peer = true
-	
 	steam_peer.server_relay = true
-	print("[LobbyManager] Llamando a create_host()...")
 	var error = steam_peer.create_host()
 	print("[LobbyManager] create_host() retornó: ", error)
 	
 	if error != OK:
-		print("[LobbyManager] ❌ Error creando host Steam: ", error)
+		print("[LobbyManager] Error creando host Steam: ", error)
 		_is_creating_peer = false
 		connection_failed.emit()
 		return
-	
 	multiplayer.multiplayer_peer = steam_peer
 	is_host = true
 	players[1] = player_info.duplicate()
-	
 	_is_creating_peer = false
 	
-	print("[LobbyManager] ✅ Lobby Steam creado exitosamente")
+	print("[LobbyManager] Lobby de Steam creado con éxito :D")
 	print("[LobbyManager] ===================================")
-	
 	server_created.emit()
 	player_joined.emit(1, player_info)
 
@@ -173,27 +142,21 @@ func _on_steam_lobby_joined(_lobby_id: int, _permissions: int, _locked: bool, re
 	print("[LobbyManager] Response: ", response)
 	
 	if response != Steam.ChatRoomEnterResponse.CHAT_ROOM_ENTER_RESPONSE_SUCCESS:
-		print("[LobbyManager] ❌ Error uniéndose al lobby: ", response)
+		print("[LobbyManager] Hubo un error al unirse al lobby :c : ", response)
 		connection_failed.emit()
 		return
-	
 	lobby_id = _lobby_id
 	var owner_id = Steam.getLobbyOwner(_lobby_id)
 	var my_steam_id = Steam.getSteamID()
-	
 	print("[LobbyManager] Owner ID: ", owner_id)
 	print("[LobbyManager] My Steam ID: ", my_steam_id)
 	
-	# Si somos el dueño, esto es el auto-join del host
 	if owner_id == my_steam_id:
-		print("[LobbyManager] ℹ️ Somos el dueño, ignorando auto-join")
+		print("[LobbyManager] Eres el dueño, ignorando auto-join")
 		return
 	
-	# CLIENTE: unirse al host
 	if _is_creating_peer:
-		print("[LobbyManager] ⚠️ Ya estamos creando peer, ignorando...")
 		return
-	
 	_is_creating_peer = true
 	
 	steam_peer.server_relay = true
@@ -202,7 +165,7 @@ func _on_steam_lobby_joined(_lobby_id: int, _permissions: int, _locked: bool, re
 	print("[LobbyManager] create_client() retornó: ", error)
 	
 	if error != OK:
-		print("[LobbyManager] ❌ Error creando cliente Steam: ", error)
+		print("[LobbyManager] Error creando cliente Steam: ", error)
 		_is_creating_peer = false
 		connection_failed.emit()
 		return
@@ -210,12 +173,11 @@ func _on_steam_lobby_joined(_lobby_id: int, _permissions: int, _locked: bool, re
 	multiplayer.multiplayer_peer = steam_peer
 	_is_creating_peer = false
 	
-	print("[LobbyManager] ✅ Cliente Steam creado, esperando conexión...")
+	print("[LobbyManager] Cliente Steam creado, esperando conexión, SE PACIENTE...")
 	print("[LobbyManager] ==================================")
 
-# ========== CALLBACKS DE MULTIPLAYER ==========
+# ========== LLAMDAS DE MULTIPLAYER ==========
 func _on_peer_connected(id: int):
-	print("[LobbyManager] ===== PEER CONNECTED =====")
 	print("[LobbyManager] ID: ", id)
 	print("[LobbyManager] Game started: ", game_started_flag)
 	print("[LobbyManager] Is host: ", is_host)
@@ -227,53 +189,45 @@ func _on_peer_connected(id: int):
 	
 	if is_host:
 		print("[LobbyManager] Enviando info de host al nuevo jugador")
-		# Enviar info del host
-		_register_player.rpc_id(id, player_info)
+		_register_player.rpc_id(id, player_info) #pa enviar info del host
 		
-		# Enviar info de todos los jugadores existentes al nuevo
+		#pa enviar info de todos los jugadores existentes al nuevo
 		for existing_id in players:
 			if existing_id != 1 and existing_id != id:
 				_send_existing_player.rpc_id(id, existing_id, players[existing_id])
 
 func _on_peer_disconnected(id: int):
-	print("[LobbyManager] ===== PEER DISCONNECTED =====")
 	print("[LobbyManager] ID: ", id)
 	players.erase(id)
 	player_left.emit(id)
 
 func _on_connected_to_server():
-	print("[LobbyManager] ===== CONNECTED TO SERVER =====")
+	print("[LobbyManager] ===== CONECTANDO AL SERVIDOR... =====")
 	var my_id = multiplayer.get_unique_id()
 	print("[LobbyManager] Mi ID: ", my_id)
-	
 	players[my_id] = player_info.duplicate()
-	
-	# Registrarse con el servidor
-	_register_player.rpc_id(1, player_info)
-	
+	_register_player.rpc_id(1, player_info) #registrarse con el servidor jiji
 	connection_ok.emit()
 
 func _on_connection_failed():
-	print("[LobbyManager] ===== CONNECTION FAILED =====")
+	print("[LobbyManager] ===== CONEXION FALLIDA D: =====")
 	_is_creating_peer = false
 	connection_failed.emit()
 
 func _on_server_disconnected():
-	print("[LobbyManager] ===== SERVER DISCONNECTED =====")
 	disconnect_from_game()
 
 # ========== RPC - REGISTRO DE JUGADORES ==========
 @rpc("any_peer", "reliable")
 func _register_player(new_player_info: Dictionary):
 	var new_player_id = multiplayer.get_remote_sender_id()
-	print("[LobbyManager] ===== REGISTRANDO JUGADOR =====")
 	print("[LobbyManager] ID: ", new_player_id)
 	print("[LobbyManager] Info: ", new_player_info)
 	
 	players[new_player_id] = new_player_info
 	player_joined.emit(new_player_id, new_player_info)
 	
-	# Si somos host, notificar a todos los demás del nuevo jugador
+	#si somos host, notificar a todos del nuevo que entre
 	if is_host and new_player_id != 1:
 		for peer_id in multiplayer.get_peers():
 			if peer_id != new_player_id:
@@ -281,7 +235,6 @@ func _register_player(new_player_info: Dictionary):
 
 @rpc("any_peer", "reliable")
 func _send_existing_player(player_id: int, info: Dictionary):
-	print("[LobbyManager] ===== JUGADOR EXISTENTE RECIBIDO =====")
 	print("[LobbyManager] ID: ", player_id)
 	print("[LobbyManager] Info: ", info)
 	
@@ -291,17 +244,16 @@ func _send_existing_player(player_id: int, info: Dictionary):
 
 @rpc("any_peer", "call_remote", "reliable")
 func _reject_late_joiner():
-	print("[LobbyManager] ===== RECHAZADO: JUEGO INICIADO =====")
+	print("[LobbyManager] ===== RECHAZADO: EL JUEGO YA HA INICIADO D: =====")
 	disconnect_from_game()
 	connection_failed.emit()
 
 # ========== INICIAR PARTIDA ==========
 func start_game(scene_path: String):
 	if not is_host:
-		print("[LobbyManager] ❌ Solo el host puede iniciar")
 		return
 	
-	print("[LobbyManager] ===== INICIANDO PARTIDA =====")
+	print("[LobbyManager] ===== INICIANDO PARTIDA :0 =====")
 	print("[LobbyManager] Escena: ", scene_path)
 	print("[LobbyManager] Jugadores: ", players.size())
 	
@@ -313,7 +265,7 @@ func start_game(scene_path: String):
 
 @rpc("call_local", "reliable")
 func _load_game(scene_path: String):
-	print("[LobbyManager] ===== CARGANDO ESCENA DE JUEGO =====")
+	print("[LobbyManager] ===== CARGANDO ESCENARIO =====")
 	print("[LobbyManager] Escena: ", scene_path)
 	game_scene_path = scene_path
 	game_started_flag = true
@@ -323,16 +275,15 @@ func _load_game(scene_path: String):
 func player_loaded():
 	if is_host:
 		players_loaded += 1
-		print("[LobbyManager] ===== JUGADOR CARGADO =====")
-		print("[LobbyManager] Cargados: ", players_loaded, "/", players.size())
+		print("[LobbyManager] Total de jugadores cargados: ", players_loaded, "/", players.size())
 		
 		if players_loaded >= players.size():
-			print("[LobbyManager] ===== TODOS LISTOS - EMPEZANDO =====")
+			print("[LobbyManager] ===== TODOS LISTOS - EMPEZANDO :D =====")
+			await get_tree().create_timer(0.1).timeout
 			_start_game_for_all.rpc()
 
 @rpc("call_local", "reliable")
 func _start_game_for_all():
-	print("[LobbyManager] ===== INICIO CONFIRMADO =====")
 	game_started.emit(game_scene_path)
 
 # ========== UTILIDADES ==========
@@ -356,4 +307,3 @@ func get_lobby_code() -> String:
 	if current_network_type == NetworkType.STEAM:
 		return str(lobby_id)
 	return ""
-	
