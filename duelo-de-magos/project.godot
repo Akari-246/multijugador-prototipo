@@ -18,6 +18,7 @@ config/icon="res://images/icon.svg"
 [autoload]
 
 GlobalLobby="*res://scripts/globalLobby.gd"
+LobbyManager="*res://scripts/lobbyManager.gd"
 
 [input]
 
