@@ -1,4 +1,3 @@
-# lobby.gd
 extends Node2D
 
 @onready var lobby_manager = LobbyManager
@@ -23,6 +22,18 @@ func _ready():
 	# Configurar player_info antes de conectar
 	lobby_manager.player_info["name"] = "Player_" + str(randi() % 1000)
 	
+	# Desconectar señales previas para evitar duplicados
+	if lobby_manager.server_created.is_connected(_on_server_created):
+		lobby_manager.server_created.disconnect(_on_server_created)
+	if lobby_manager.connection_ok.is_connected(_on_connection_ok):
+		lobby_manager.connection_ok.disconnect(_on_connection_ok)
+	if lobby_manager.connection_failed.is_connected(_on_connection_failed):
+		lobby_manager.connection_failed.disconnect(_on_connection_failed)
+	if lobby_manager.player_joined.is_connected(_on_player_joined):
+		lobby_manager.player_joined.disconnect(_on_player_joined)
+	if lobby_manager.player_left.is_connected(_on_player_left):
+		lobby_manager.player_left.disconnect(_on_player_left)
+	
 	# Conectar señales
 	lobby_manager.server_created.connect(_on_server_created)
 	lobby_manager.connection_ok.connect(_on_connection_ok)
@@ -30,11 +41,11 @@ func _ready():
 	lobby_manager.player_joined.connect(_on_player_joined)
 	lobby_manager.player_left.connect(_on_player_left)
 	
-	# SOLO conectar Steam si estamos en modo Steam
+	# Solo conectar Steam si estamos en modo Steam
 	if network_type == LobbyManager.NetworkType.STEAM:
-		# Verificar que Steam esté disponible ANTES de conectar señales
 		if Steam.isSteamRunning():
-			Steam.join_requested.connect(_on_steam_join_requested)
+			if not Steam.join_requested.is_connected(_on_steam_join_requested):
+				Steam.join_requested.connect(_on_steam_join_requested)
 		else:
 			print("[Lobby] Advertencia: Steam no está corriendo")
 	
@@ -52,10 +63,12 @@ func _setup_ui():
 	elif network_type == LobbyManager.NetworkType.STEAM:
 		ip_input.visible = false
 		steam_container.visible = true
+		status_label.text = "Modo Steam"
 		
-		# VERIFICAR que Steam exista ANTES de llamar cualquier función
-		if Steam.isSteamRunning():
-			if Steam.loggedOn():
+		await get_tree().process_frame
+		
+		if Steam and Steam.isSteamRunning():
+			if Steam.getSteamID() > 0:
 				var steam_name = Steam.getFriendPersonaName(Steam.getSteamID())
 				status_label.text = "Steam: " + steam_name
 				lobby_manager.player_info["name"] = steam_name
@@ -97,6 +110,8 @@ func _on_join_pressed() -> void:
 
 func _on_start_game_pressed() -> void:
 	if lobby_manager.is_host and game_scene:
+		status_label.text = "Iniciando partida..."
+		startBtn.disabled = true
 		lobby_manager.start_game(game_scene.resource_path)
 	else:
 		status_label.text = "Solo el host puede iniciar"
@@ -114,9 +129,13 @@ func _on_server_created():
 		lobby_input.text = str(lobby_manager.lobby_id)
 		invite_btn.disabled = false
 		status_label.text = "Lobby: " + str(lobby_manager.lobby_id)
+	
+	_update_player_list()
 
 func _on_connection_ok():
 	status_label.text = "Conectado al servidor"
+	startBtn.visible = false
+	_update_player_list()
 
 func _on_connection_failed():
 	status_label.text = "Error de conexión"
@@ -124,7 +143,9 @@ func _on_connection_failed():
 	joinBtn.disabled = false
 
 func _on_player_joined(id: int, player_info: Dictionary):
-	status_label.text = "Jugador conectado: " + player_info.get("name", "Player")
+	var player_name = player_info.get("name", "Player")
+	status_label.text = "Jugador conectado: " + player_name
+	print("[Lobby] Jugador unido - ID: ", id, " Nombre: ", player_name)
 	_update_player_list()
 
 func _on_player_left(id: int):
@@ -141,8 +162,10 @@ func _update_player_list():
 	for child in player_list.get_children():
 		child.queue_free()
 	
+	print("[Lobby] Actualizando lista de jugadores. Total: ", lobby_manager.players.size())
 	for id in lobby_manager.players:
 		var info = lobby_manager.players[id]
 		var label = Label.new()
-		label.text = info.get("name", "Player " + str(id))
+		label.text = info.get("name", "Player " + str(id)) + " (ID: " + str(id) + ")"
 		player_list.add_child(label)
+		print("[Lobby] - ", label.text)
