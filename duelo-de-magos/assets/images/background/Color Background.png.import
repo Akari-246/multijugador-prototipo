@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0bbvy0rfdre7"
-path="res://.godot/imported/spritesheet_wood_thrush.png-bdfe97d2437c26a1b1295ae8aca2479e.ctex"
+uid="uid://bv0k1c07w5s4u"
+path="res://.godot/imported/Color Background.png-5a4072d85ed977a4084bda72082061d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/characters/pajaros/spritesheet_wood_thrush.png"
-dest_files=["res://.godot/imported/spritesheet_wood_thrush.png-bdfe97d2437c26a1b1295ae8aca2479e.ctex"]
+source_file="res://assets/images/background/Color Background.png"
+dest_files=["res://.godot/imported/Color Background.png-5a4072d85ed977a4084bda72082061d5.ctex"]
 
 [params]
 

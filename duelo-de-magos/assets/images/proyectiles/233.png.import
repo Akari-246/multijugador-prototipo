@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddfuu7h2sgwjj"
-path="res://.godot/imported/River Tileset.png-90391febf73ce49758ab79f9e1617b9b.ctex"
+uid="uid://yoh3ik2sqeb5"
+path="res://.godot/imported/233.png-0262e2072f4ee2342c9a6ddbb461b32e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/tiles/River Tileset.png"
-dest_files=["res://.godot/imported/River Tileset.png-90391febf73ce49758ab79f9e1617b9b.ctex"]
+source_file="res://assets/images/proyectiles/233.png"
+dest_files=["res://.godot/imported/233.png-0262e2072f4ee2342c9a6ddbb461b32e.ctex"]
 
 [params]
 

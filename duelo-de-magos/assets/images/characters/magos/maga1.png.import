@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpul4akbk8p1c"
-path="res://.godot/imported/spritesheet_white_dove.png-1b926c9995a9679177bae572e15a3d91.ctex"
+uid="uid://4jwm42p0ywqw"
+path="res://.godot/imported/maga1.png-0497fad45423618bb3029a092a75f366.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/characters/pajaros/spritesheet_white_dove.png"
-dest_files=["res://.godot/imported/spritesheet_white_dove.png-1b926c9995a9679177bae572e15a3d91.ctex"]
+source_file="res://assets/images/characters/magos/maga1.png"
+dest_files=["res://.godot/imported/maga1.png-0497fad45423618bb3029a092a75f366.ctex"]
 
 [params]
 

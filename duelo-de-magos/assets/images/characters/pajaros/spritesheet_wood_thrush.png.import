@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8g8wb3n40qrk"
-path="res://.godot/imported/mago3.png-b672a6d645ea430f60453f15926f0234.ctex"
+uid="uid://0bbvy0rfdre7"
+path="res://.godot/imported/spritesheet_wood_thrush.png-d8dd4bbf7d5cce71489febe0f697f683.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/characters/magos/mago3.png"
-dest_files=["res://.godot/imported/mago3.png-b672a6d645ea430f60453f15926f0234.ctex"]
+source_file="res://assets/images/characters/pajaros/spritesheet_wood_thrush.png"
+dest_files=["res://.godot/imported/spritesheet_wood_thrush.png-d8dd4bbf7d5cce71489febe0f697f683.ctex"]
 
 [params]
 

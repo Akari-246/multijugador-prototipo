@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b0phbj315ojl"
-path="res://.godot/imported/566.png-4270fcc60dbc4113c7e3f8a2306ef4cb.ctex"
+uid="uid://c8cwk0xu311x4"
+path="res://.godot/imported/mago2.png-c03d2eeb97421734c582b1d7847b4503.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/proyectiles/566.png"
-dest_files=["res://.godot/imported/566.png-4270fcc60dbc4113c7e3f8a2306ef4cb.ctex"]
+source_file="res://assets/images/characters/magos/mago2.png"
+dest_files=["res://.godot/imported/mago2.png-c03d2eeb97421734c582b1d7847b4503.ctex"]
 
 [params]
 

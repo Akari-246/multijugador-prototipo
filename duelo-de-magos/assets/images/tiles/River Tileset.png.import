@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://clxbt6v18uern"
-path="res://.godot/imported/spritesheet_magpie.png-e1753dada76c43e2b089ec9b949ffa80.ctex"
+uid="uid://ddfuu7h2sgwjj"
+path="res://.godot/imported/River Tileset.png-c28fa884a7261eb1ed8dfea1904fe774.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/characters/pajaros/spritesheet_magpie.png"
-dest_files=["res://.godot/imported/spritesheet_magpie.png-e1753dada76c43e2b089ec9b949ffa80.ctex"]
+source_file="res://assets/images/tiles/River Tileset.png"
+dest_files=["res://.godot/imported/River Tileset.png-c28fa884a7261eb1ed8dfea1904fe774.ctex"]
 
 [params]
 

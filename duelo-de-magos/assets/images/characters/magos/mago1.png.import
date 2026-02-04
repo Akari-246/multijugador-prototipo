@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bv0k1c07w5s4u"
-path="res://.godot/imported/Color Background.png-aadb37daa4fb7d755c04fd00b29c66b1.ctex"
+uid="uid://bc42mda4mryp4"
+path="res://.godot/imported/mago1.png-898144691b6de23cae4bc42840595cd8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/background/Color Background.png"
-dest_files=["res://.godot/imported/Color Background.png-aadb37daa4fb7d755c04fd00b29c66b1.ctex"]
+source_file="res://assets/images/characters/magos/mago1.png"
+dest_files=["res://.godot/imported/mago1.png-898144691b6de23cae4bc42840595cd8.ctex"]
 
 [params]
 

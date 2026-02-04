@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bma5pjxw5v2hj"
-path="res://.godot/imported/spritesheet_hummingbird.png-3ac98d68a14a8e2f808723453ef94a1f.ctex"
+uid="uid://cffog8a4gydkd"
+path="res://.godot/imported/maga3.png-d3cff953d25ba4c9f1997de5a171a5e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/characters/pajaros/spritesheet_hummingbird.png"
-dest_files=["res://.godot/imported/spritesheet_hummingbird.png-3ac98d68a14a8e2f808723453ef94a1f.ctex"]
+source_file="res://assets/images/characters/magos/maga3.png"
+dest_files=["res://.godot/imported/maga3.png-d3cff953d25ba4c9f1997de5a171a5e3.ctex"]
 
 [params]
 
