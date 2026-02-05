@@ -18,15 +18,21 @@ bg_color = Color(0.23029718, 0.6977021, 0.6812359, 1)
 
 [node name="Main" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_o5qli")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_left = -215.0
-offset_top = -192.0
-offset_right = 2026.0
-offset_bottom = 1088.0
+offset_left = -1350.0
+offset_top = -612.0
+offset_right = 1436.0
+offset_bottom = 762.0
 color = Color(0.06563372, 0.3478118, 0.34404778, 1)
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="."]
@@ -35,10 +41,10 @@ anchors_preset = 14
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 256.5
-offset_top = 147.0
-offset_right = 868.0
-offset_bottom = 468.0
+offset_left = -333.5
+offset_top = -203.5
+offset_right = 278.0
+offset_bottom = 166.5
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 49
@@ -46,9 +52,16 @@ alignment = 1
 
 [node name="Label" type="Label" parent="VBoxContainer2"]
 layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0.20392157, 0.827451, 0.81960785, 0.5529412)
+theme_override_colors/font_outline_color = Color(0.14133245, 0.6291033, 0.6230377, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 12
 theme_override_fonts/font = ExtResource("2_0wfyh")
-theme_override_font_sizes/font_size = 40
-text = "BIENVENIDO A 
+theme_override_font_sizes/font_size = 51
+text = "BIENVENIDO A...
+
 DUELO DE MAGAJAROS"
 horizontal_alignment = 1
 
@@ -62,8 +75,11 @@ theme_override_constants/separation = 16
 
 [node name="Label" type="Label" parent="VBoxContainer2/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.14117648, 0.627451, 0.62352943, 1)
+theme_override_constants/outline_size = 8
+theme_override_constants/shadow_outline_size = 10
 theme_override_fonts/font = ExtResource("2_0wfyh")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 40
 text = "Elija un lobby"
 horizontal_alignment = 1
 
@@ -77,7 +93,7 @@ theme_override_constants/separation = 46
 custom_minimum_size = Vector2(120, 50)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0wfyh")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_0wfyh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_sugp2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jyhfs")
@@ -87,7 +103,7 @@ icon_alignment = 1
 [node name="BtnLan" type="Button" parent="VBoxContainer2/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_0wfyh")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_0wfyh")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_sugp2")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jyhfs")

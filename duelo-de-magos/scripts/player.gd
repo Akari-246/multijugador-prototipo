@@ -14,11 +14,32 @@ var bullet =preload("res://scenes/bala_fuego.tscn")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: Camera2D = $Camera2D
 @onready var spawnPoint: Marker2D = $SpawnPoint
+@onready var nickname = $nick
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 
 func _ready():
+	var playerId = name.to_int()
+	await get_tree().process_frame
+	var playerData = LobbyManager.players.get(playerId, {})
+	var playerName = playerData.get("name", "Player")
+	var avatarId = playerData.get("avatar_id", "")
+	
+	if nickname:
+		nickname.text = playerName
+		nickname.add_theme_font_size_override("font_size", 14)
+		nickname.add_theme_color_override("font_color", Color.WHITE)
+		#eto la sombrita
+		nickname.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+		nickname.add_theme_constant_override("shadow_offset_x", 1)
+		nickname.add_theme_constant_override("shadow_offset_y", 1)
+	
+	if sprite and avatarId != "":
+		_load_avatar(avatarId)
+	else:
+		print("[Player] ERROR: No se pudo cargar el avatar: ", avatarId)
+	
 	if camera:
 		camera.enabled = is_multiplayer_authority()
 	if sprite:
@@ -185,3 +206,18 @@ func respawn(new_position: Vector2):
 	
 func _exit_tree():
 	is_attacking = false
+
+func _load_avatar(avatarId: String):
+	var avatar_path = "res://resources/avatares/" + avatarId + ".tres"
+	
+	if not ResourceLoader.exists(avatar_path):
+		print("[Player] ERROR: Avatar no existe: ", avatar_path)
+		return
+	
+	var avatar_resource = load(avatar_path)
+	if avatar_resource and avatar_resource is Avatar:
+		sprite.sprite_frames = avatar_resource.sprite_frames
+		sprite.play("idle")
+		print("[Player] Avatar cargado: ", avatarId)
+	else:
+		print("[Player] ERROR: No se pudo cargar el avatar: ", avatarId)

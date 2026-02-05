@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=4 format=3 uid="uid://c6cd0iiwidv85"]
+
+[ext_resource type="Texture2D" uid="uid://cs0iiambw1ii4" path="res://assets/images/characters/pajaros/individual/spritesheet_cardinal.png" id="1_gu0re"]
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_quyo7"]
+[ext_resource type="SpriteFrames" uid="uid://ddtqc4jt6oskg" path="res://resources/avatares/player4.tres" id="3_5cef5"]
+
+[resource]
+script = ExtResource("1_quyo7")
+id = "pollorojo"
+display_name = "PolloRojo"
+image = ExtResource("1_gu0re")
+sprite_frames = ExtResource("3_5cef5")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"

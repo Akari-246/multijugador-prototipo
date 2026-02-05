@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=4 format=3 uid="uid://dvpe07lorr2wr"]
+
+[ext_resource type="Texture2D" uid="uid://cak061x65oc6o" path="res://assets/images/characters/pajaros/individual/spritesheet_wood_thrush.png" id="1_6n00v"]
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_gfmqw"]
+[ext_resource type="SpriteFrames" uid="uid://d078of0xins70" path="res://resources/avatares/player6.tres" id="3_b08hm"]
+
+[resource]
+script = ExtResource("1_gfmqw")
+id = "roxy"
+display_name = "Roxy"
+image = ExtResource("1_6n00v")
+sprite_frames = ExtResource("3_b08hm")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"

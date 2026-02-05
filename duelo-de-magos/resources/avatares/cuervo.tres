@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=4 format=3 uid="uid://c34anrd528bro"]
+
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_ileis"]
+[ext_resource type="Texture2D" uid="uid://em7brueym06p" path="res://assets/images/characters/pajaros/individual/spritesheet_crow.png" id="1_w1y4s"]
+[ext_resource type="SpriteFrames" uid="uid://cm083gc0yw114" path="res://resources/avatares/player2.tres" id="3_cwyme"]
+
+[resource]
+script = ExtResource("1_ileis")
+id = "cuervo"
+display_name = "Cuervo"
+image = ExtResource("1_w1y4s")
+sprite_frames = ExtResource("3_cwyme")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"

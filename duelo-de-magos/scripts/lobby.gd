@@ -2,7 +2,6 @@
 extends Node2D
 
 @onready var lobby_manager = LobbyManager
-
 @onready var hostBtn = $Host
 @onready var joinBtn = $Join
 @onready var startBtn = $StartGame
@@ -12,7 +11,8 @@ extends Node2D
 @onready var lobby_input = $SteamContainer/LobbyInput
 @onready var invite_btn = $SteamContainer/InviteButton
 @onready var player_list = $PlayerList
-
+@onready var playerName = $PlayerName
+@onready var avatarCont = $AvatarContainer
 @export var game_scene: PackedScene
 
 var network_type: LobbyManager.NetworkType
@@ -39,7 +39,7 @@ func _ready():
 	lobby_manager.player_joined.connect(_on_player_joined)
 	lobby_manager.player_left.connect(_on_player_left)
 	
-	#conectar steam si estas modo steam
+	#conectar steam si estas modo steam duh
 	if network_type == LobbyManager.NetworkType.STEAM:
 		if Steam.isSteamRunning():
 			if not Steam.join_requested.is_connected(_on_steam_join_requested):
@@ -75,6 +75,8 @@ func _setup_ui():
 
 # ========== BOTONES ==========
 func _on_host_pressed() -> void:
+	if not _validate_player_data():
+		return
 	status_label.text = "Creando servidor..."
 	hostBtn.disabled = true
 	joinBtn.disabled = true
@@ -84,6 +86,8 @@ func _on_host_pressed() -> void:
 		lobby_manager.host_steam()
 
 func _on_join_pressed() -> void:
+	if not _validate_player_data():
+		return
 	status_label.text = "Conectando..."
 	hostBtn.disabled = true
 	joinBtn.disabled = true
@@ -155,3 +159,18 @@ func _update_player_list():
 		label.text = info.get("name", "Player " + str(id)) + " (ID: " + str(id) + ")"
 		player_list.add_child(label)
 		print("[Lobby] - ", label.text)
+
+func _validate_player_data():
+	status_label.text = ""
+	var valido = true
+	if not playerName.text:
+		status_label.text += "Nombre requerido >:( | "
+		valido = false
+	if not SelectManager.selected_avatar:
+		status_label.text += "Avatar requerido >:c | "
+		valido =false
+	if valido:
+		lobby_manager.player_info["name"] = playerName.text
+		lobby_manager.player_info["avatar_id"] = SelectManager.avatar.id
+		status_label.text = "Listo..."
+	return valido

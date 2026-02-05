@@ -5,7 +5,6 @@ const LIFETIME: float = 5.0
 
 @export var direction_vector: Vector2 = Vector2.RIGHT
 @export var shooter_id: int = 0
-
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var hitbox: Area2D = $Area2D
 
@@ -13,7 +12,6 @@ var velocity: Vector2 = Vector2.ZERO
 
 func _ready():
 	velocity = direction_vector.normalized() * SPEED
-	
 	if sprite:
 		sprite.flip_h = (direction_vector.x < 0)
 		sprite.play()

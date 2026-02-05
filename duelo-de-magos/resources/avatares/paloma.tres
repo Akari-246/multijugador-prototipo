@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=3 format=3 uid="uid://8nxr0ga32kyx"]
+
+[ext_resource type="Texture2D" uid="uid://8hmc8sgoid6i" path="res://assets/images/characters/pajaros/individual/spritesheet_white_dove.png" id="1_6oomm"]
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_gu3tu"]
+
+[resource]
+script = ExtResource("1_gu3tu")
+id = "paloma"
+display_name = "Paloma"
+image = ExtResource("1_6oomm")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"

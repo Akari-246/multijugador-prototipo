@@ -6,27 +6,23 @@ signal server_created
 signal player_joined(id: int, player_info: Dictionary)
 signal player_left(id: int)
 signal game_started(scene_path: String)
-
 enum NetworkType { LAN, STEAM }
-
 const DEFAULT_PORT = 3306
 const MAX_PLAYERS = 4
 
 var current_network_type: NetworkType
 var players = {}
-var player_info = {"name": "Player", "avatar": "p1"}
-
+var player_info = {"name": "Player", "avatar": "p1", "sprite_frames": null}
 var lan_peer: ENetMultiplayerPeer
 var steam_peer: SteamMultiplayerPeer
 var lobby_id: int = 0
 var is_host: bool = false
-
 var game_started_flag: bool = false
 var players_loaded: int = 0
 var game_scene_path: String = ""
-
 var _steam_initialized: bool = false
 var _is_creating_peer: bool = false
+var waiting_for_server = false
 
 func _ready():
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -113,14 +109,13 @@ func _on_steam_lobby_created(result: int, _lobby_id: int):
 		connection_failed.emit()
 		return
 	lobby_id = _lobby_id
-	
 	if _is_creating_peer:
 		return
 	_is_creating_peer = true
 	steam_peer.server_relay = true
 	var error = steam_peer.create_host()
 	print("[LobbyManager] create_host() retornó: ", error)
-	
+
 	if error != OK:
 		print("[LobbyManager] Error creando host Steam: ", error)
 		_is_creating_peer = false
@@ -130,7 +125,6 @@ func _on_steam_lobby_created(result: int, _lobby_id: int):
 	is_host = true
 	players[1] = player_info.duplicate()
 	_is_creating_peer = false
-	
 	print("[LobbyManager] Lobby de Steam creado con éxito :D")
 	print("[LobbyManager] ===================================")
 	server_created.emit()
@@ -154,11 +148,9 @@ func _on_steam_lobby_joined(_lobby_id: int, _permissions: int, _locked: bool, re
 	if owner_id == my_steam_id:
 		print("[LobbyManager] Eres el dueño, ignorando auto-join")
 		return
-	
 	if _is_creating_peer:
 		return
 	_is_creating_peer = true
-	
 	steam_peer.server_relay = true
 	print("[LobbyManager] Llamando a create_client(", owner_id, ")...")
 	var error = steam_peer.create_client(owner_id)
@@ -186,11 +178,9 @@ func _on_peer_connected(id: int):
 		print("[LobbyManager] Rechazando - juego ya iniciado")
 		_reject_late_joiner.rpc_id(id)
 		return
-	
 	if is_host:
 		print("[LobbyManager] Enviando info de host al nuevo jugador")
-		_register_player.rpc_id(id, player_info) #pa enviar info del host
-		
+		_register_player.rpc_id(id, players[1]) #pa enviar info del host
 		#pa enviar info de todos los jugadores existentes al nuevo
 		for existing_id in players:
 			if existing_id != 1 and existing_id != id:
@@ -206,8 +196,9 @@ func _on_connected_to_server():
 	var my_id = multiplayer.get_unique_id()
 	print("[LobbyManager] Mi ID: ", my_id)
 	players[my_id] = player_info.duplicate()
+	waiting_for_server = true
 	_register_player.rpc_id(1, player_info) #registrarse con el servidor jiji
-	connection_ok.emit()
+	#connection_ok.emit()
 
 func _on_connection_failed():
 	print("[LobbyManager] ===== CONEXION FALLIDA D: =====")
@@ -221,13 +212,20 @@ func _on_server_disconnected():
 @rpc("any_peer", "reliable")
 func _register_player(new_player_info: Dictionary):
 	var new_player_id = multiplayer.get_remote_sender_id()
-	print("[LobbyManager] ID: ", new_player_id)
-	print("[LobbyManager] Info: ", new_player_info)
+	print("[LobbyManager] Registrando jugador ID: ", new_player_id)
+	print("[LobbyManager] Info recibida: ", new_player_info)
 	
+	# Verificar que tenga avatar_id
+	if not new_player_info.has("avatar_id") or new_player_info["avatar_id"] == "":
+		print("[LobbyManager] WARNING: Jugador sin avatar_id")
 	players[new_player_id] = new_player_info
 	player_joined.emit(new_player_id, new_player_info)
+	if waiting_for_server and new_player_id ==1:
+		print("info del servidor recibida :3")
+		waiting_for_server = false
+		connection_ok.emit()
 	
-	#si somos host, notificar a todos del nuevo que entre
+	# Si somos host, notificar a todos del nuevo jugador
 	if is_host and new_player_id != 1:
 		for peer_id in multiplayer.get_peers():
 			if peer_id != new_player_id:
@@ -237,7 +235,6 @@ func _register_player(new_player_info: Dictionary):
 func _send_existing_player(player_id: int, info: Dictionary):
 	print("[LobbyManager] ID: ", player_id)
 	print("[LobbyManager] Info: ", info)
-	
 	if not players.has(player_id):
 		players[player_id] = info
 		player_joined.emit(player_id, info)
@@ -252,15 +249,12 @@ func _reject_late_joiner():
 func start_game(scene_path: String):
 	if not is_host:
 		return
-	
 	print("[LobbyManager] ===== INICIANDO PARTIDA :0 =====")
 	print("[LobbyManager] Escena: ", scene_path)
 	print("[LobbyManager] Jugadores: ", players.size())
-	
 	game_started_flag = true
 	game_scene_path = scene_path
 	players_loaded = 0
-	
 	_load_game.rpc(scene_path)
 
 @rpc("call_local", "reliable")
@@ -276,7 +270,6 @@ func player_loaded():
 	if is_host:
 		players_loaded += 1
 		print("[LobbyManager] Total de jugadores cargados: ", players_loaded, "/", players.size())
-		
 		if players_loaded >= players.size():
 			print("[LobbyManager] ===== TODOS LISTOS - EMPEZANDO :D =====")
 			await get_tree().create_timer(0.1).timeout
@@ -295,6 +288,7 @@ func disconnect_from_game():
 	game_started_flag = false
 	players_loaded = 0
 	_is_creating_peer = false
+	waiting_for_server = false
 	
 	if current_network_type == NetworkType.STEAM and lobby_id > 0:
 		Steam.leaveLobby(lobby_id)

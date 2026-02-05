@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://vbbglqf6txiw"]
+
+[ext_resource type="Script" uid="uid://8tc8as53qb26" path="res://scripts/avatar_select.gd" id="1_y117x"]
+
+[node name="AvatarSelect" type="TextureButton"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_y117x")

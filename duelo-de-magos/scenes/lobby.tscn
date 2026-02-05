@@ -1,8 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://55eh8f2voxws"]
+[gd_scene load_steps=20 format=3 uid="uid://55eh8f2voxws"]
 
 [ext_resource type="Script" uid="uid://bnu1grsufumeq" path="res://scripts/lobby.gd" id="1_o1atq"]
 [ext_resource type="PackedScene" uid="uid://cjkth8sugw7dd" path="res://scenes/game.tscn" id="2_5gu6x"]
 [ext_resource type="FontFile" uid="uid://c47nhrcsnnxtk" path="res://assets/fonts/Minecraft.ttf" id="3_q60fs"]
+[ext_resource type="Script" uid="uid://8tc8as53qb26" path="res://scripts/avatar_select.gd" id="4_oipnb"]
+[ext_resource type="Resource" uid="uid://8nxr0ga32kyx" path="res://resources/avatares/paloma.tres" id="5_yad6j"]
+[ext_resource type="Resource" uid="uid://c34anrd528bro" path="res://resources/avatares/cuervo.tres" id="6_m1sns"]
+[ext_resource type="Resource" uid="uid://bwm7awcqem7e8" path="res://resources/avatares/polloVerde.tres" id="7_dyhay"]
+[ext_resource type="Resource" uid="uid://c6cd0iiwidv85" path="res://resources/avatares/polloRojo.tres" id="8_q6qq2"]
+[ext_resource type="Resource" uid="uid://bjwmxwhbi6w3b" path="res://resources/avatares/polloAzul.tres" id="9_rgcd7"]
+[ext_resource type="Resource" uid="uid://dvpe07lorr2wr" path="res://resources/avatares/roxy.tres" id="10_lqo1b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q60fs"]
 bg_color = Color(0.09411765, 0.54901963, 0.58431375, 1)
@@ -37,10 +44,10 @@ script = ExtResource("1_o1atq")
 game_scene = ExtResource("2_5gu6x")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = -103.0
+offset_left = -349.0
 offset_top = -86.0
-offset_right = 2131.0
-offset_bottom = 1089.0
+offset_right = 1974.0
+offset_bottom = 1127.0
 color = Color(0.0419008, 0.2657802, 0.26266575, 1)
 
 [node name="StatusLabel" type="Label" parent="."]
@@ -48,6 +55,8 @@ offset_left = 13.0
 offset_top = 16.0
 offset_right = 216.0
 offset_bottom = 39.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 22
 text = "Status: Ready"
@@ -55,7 +64,7 @@ text = "Status: Ready"
 [node name="ip" type="Label" parent="."]
 offset_left = 37.0
 offset_top = 64.0
-offset_right = 240.0
+offset_right = 74.0
 offset_bottom = 87.0
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 22
@@ -64,27 +73,31 @@ text = "IP:"
 [node name="port" type="Label" parent="."]
 offset_left = 345.0
 offset_top = 64.0
-offset_right = 548.0
+offset_right = 435.0
 offset_bottom = 87.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 22
 text = "PORT:"
 
 [node name="IPInput" type="LineEdit" parent="."]
-offset_left = 37.0
-offset_top = 97.0
-offset_right = 239.0
-offset_bottom = 128.0
+offset_left = 91.0
+offset_top = 58.0
+offset_right = 293.0
+offset_bottom = 89.0
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_q60fs")
 text = "127.0.0.1"
 
 [node name="PortInput" type="LineEdit" parent="."]
-offset_left = 341.0
-offset_top = 97.0
-offset_right = 543.0
-offset_bottom = 128.0
+offset_left = 440.0
+offset_top = 58.0
+offset_right = 642.0
+offset_bottom = 89.0
+size_flags_horizontal = 8
+size_flags_vertical = 0
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 22
 theme_override_styles/normal = SubResource("StyleBoxFlat_q60fs")
@@ -97,12 +110,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 472.0
-offset_top = 185.5
-offset_right = 574.0
-offset_bottom = 235.5
+offset_left = 500.0
+offset_top = 126.0
+offset_right = 602.0
+offset_bottom = 176.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 23
 theme_override_styles/normal = SubResource("StyleBoxFlat_nqcc7")
@@ -112,10 +127,12 @@ text = "HOST"
 
 [node name="Join" type="Button" parent="."]
 custom_minimum_size = Vector2(70, 50)
-offset_left = 602.0
-offset_top = 186.0
-offset_right = 706.0
-offset_bottom = 236.0
+offset_left = 630.0
+offset_top = 126.5
+offset_right = 734.0
+offset_bottom = 176.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 23
 theme_override_styles/normal = SubResource("StyleBoxFlat_nqcc7")
@@ -130,12 +147,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 540.0
-offset_top = 259.5
-offset_right = 642.0
-offset_bottom = 309.5
+offset_left = 568.0
+offset_top = 200.0
+offset_right = 670.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("3_q60fs")
 theme_override_font_sizes/font_size = 23
 theme_override_styles/normal = SubResource("StyleBoxFlat_nqcc7")
@@ -144,10 +163,12 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_apkv3")
 text = "START"
 
 [node name="SteamContainer" type="VBoxContainer" parent="."]
-offset_left = 473.0
-offset_top = 338.0
-offset_right = 717.0
-offset_bottom = 416.0
+offset_left = 501.0
+offset_top = 278.5
+offset_right = 745.0
+offset_bottom = 356.5
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/separation = 10
 
 [node name="LobbyInput" type="LineEdit" parent="SteamContainer"]
@@ -166,11 +187,85 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_07nfq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_oipnb")
 text = "INVITE"
 
+[node name="PlayerName" type="LineEdit" parent="."]
+custom_minimum_size = Vector2(100, 30)
+offset_left = 40.0
+offset_top = 370.0
+offset_right = 424.0
+offset_bottom = 410.0
+theme_override_fonts/font = ExtResource("3_q60fs")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_omrgh")
+placeholder_text = "Escribe tu nombre..."
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(385, 0)
+offset_left = 39.0
+offset_top = 434.0
+offset_right = 427.0
+offset_bottom = 480.0
+color = Color(0.31764707, 0.9647059, 0.9607843, 0.34509805)
+
+[node name="AvatarContainer" type="HBoxContainer" parent="."]
+offset_left = 42.0
+offset_top = 436.0
+offset_right = 442.0
+offset_bottom = 481.0
+theme_override_constants/separation = 20
+
+[node name="TextureButton" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("5_yad6j")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.04209616, 0.2759751, 0.29021063, 1)
+
+[node name="TextureButton2" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("6_m1sns")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.043137256, 0.27450982, 0.2901961, 1)
+
+[node name="TextureButton3" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("7_dyhay")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.043137256, 0.27450982, 0.2901961, 1)
+
+[node name="TextureButton4" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("8_q6qq2")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.043137256, 0.27450982, 0.2901961, 1)
+
+[node name="TextureButton5" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("9_rgcd7")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.043137256, 0.27450982, 0.2901961, 1)
+
+[node name="TextureButton6" type="TextureButton" parent="AvatarContainer"]
+custom_minimum_size = Vector2(50, 30)
+layout_mode = 2
+script = ExtResource("4_oipnb")
+avatar = ExtResource("10_lqo1b")
+selected_color = Color(1, 1, 1, 1)
+highlighted_color = Color(0.043137256, 0.27450982, 0.2901961, 1)
+
 [node name="PlayerList" type="VBoxContainer" parent="."]
-offset_left = 13.0
-offset_top = 539.0
-offset_right = 441.0
-offset_bottom = 627.0
+offset_left = 43.0
+offset_top = 513.0
+offset_right = 465.0
+offset_bottom = 625.0
 theme = SubResource("Theme_q60fs")
 theme_override_constants/separation = 5
 
@@ -178,3 +273,21 @@ theme_override_constants/separation = 5
 [connection signal="pressed" from="Join" to="." method="_on_join_pressed"]
 [connection signal="pressed" from="StartGame" to="." method="_on_start_game_pressed"]
 [connection signal="pressed" from="SteamContainer/InviteButton" to="." method="_on_invite_button_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton" to="AvatarContainer/TextureButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton" to="AvatarContainer/TextureButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton" to="AvatarContainer/TextureButton" method="_on_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton2" to="AvatarContainer/TextureButton2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton2" to="AvatarContainer/TextureButton2" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton2" to="AvatarContainer/TextureButton2" method="_on_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton3" to="AvatarContainer/TextureButton3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton3" to="AvatarContainer/TextureButton3" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton3" to="AvatarContainer/TextureButton3" method="_on_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton4" to="AvatarContainer/TextureButton4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton4" to="AvatarContainer/TextureButton4" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton4" to="AvatarContainer/TextureButton4" method="_on_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton5" to="AvatarContainer/TextureButton5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton5" to="AvatarContainer/TextureButton5" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton5" to="AvatarContainer/TextureButton5" method="_on_pressed"]
+[connection signal="mouse_entered" from="AvatarContainer/TextureButton6" to="AvatarContainer/TextureButton6" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="AvatarContainer/TextureButton6" to="AvatarContainer/TextureButton6" method="_on_mouse_exited"]
+[connection signal="pressed" from="AvatarContainer/TextureButton6" to="AvatarContainer/TextureButton6" method="_on_pressed"]

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=4 format=3 uid="uid://bjwmxwhbi6w3b"]
+
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_su7xn"]
+[ext_resource type="Texture2D" uid="uid://d2mlfom687716" path="res://assets/images/characters/pajaros/individual/spritesheet_magpie.png" id="1_wfsu1"]
+[ext_resource type="SpriteFrames" uid="uid://dg255cnimo3ej" path="res://resources/avatares/player5.tres" id="3_qfut0"]
+
+[resource]
+script = ExtResource("1_su7xn")
+id = "polloazul"
+display_name = "PolloAzul"
+image = ExtResource("1_wfsu1")
+sprite_frames = ExtResource("3_qfut0")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"

@@ -13,12 +13,13 @@ config_version=5
 config/name="duelo de magájaros"
 run/main_scene="uid://comt613wflbkv"
 config/features=PackedStringArray("4.5", "GL Compatibility")
-config/icon="res://assets/images/icon.svg"
+config/icon="uid://8hmc8sgoid6i"
 
 [autoload]
 
 GlobalLobby="*res://scripts/globalLobby.gd"
 LobbyManager="*res://scripts/lobbyManager.gd"
+SelectManager="*res://scripts/selectManager.gd"
 
 [input]
 

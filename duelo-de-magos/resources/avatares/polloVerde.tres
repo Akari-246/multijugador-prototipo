@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="Avatar" load_steps=4 format=3 uid="uid://bwm7awcqem7e8"]
+
+[ext_resource type="Texture2D" uid="uid://cy06o2modi3dq" path="res://assets/images/characters/pajaros/individual/spritesheet_hummingbird.png" id="1_iye0d"]
+[ext_resource type="Script" uid="uid://dx7thcyrr4x52" path="res://scripts/avatar.gd" id="1_rv1pq"]
+[ext_resource type="SpriteFrames" uid="uid://d1suomyhedlfd" path="res://resources/avatares/player3.tres" id="3_ibdeq"]
+
+[resource]
+script = ExtResource("1_rv1pq")
+id = "polloverde"
+display_name = "PolloVerde"
+image = ExtResource("1_iye0d")
+sprite_frames = ExtResource("3_ibdeq")
+metadata/_custom_type_script = "uid://dx7thcyrr4x52"
