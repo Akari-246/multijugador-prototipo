@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=4 uid="uid://cjkth8sugw7dd"]
+[gd_scene load_steps=9 format=4 uid="uid://cjkth8sugw7dd"]
 
 [ext_resource type="Script" uid="uid://ca2g0h63ymapx" path="res://scripts/game.gd" id="1_yqjtg"]
 [ext_resource type="Texture2D" uid="uid://bv0k1c07w5s4u" path="res://assets/images/background/Color Background.png" id="2_lnu2h"]
 [ext_resource type="Texture2D" uid="uid://ddfuu7h2sgwjj" path="res://assets/images/tiles/River Tileset.png" id="3_lbhrr"]
 [ext_resource type="PackedScene" uid="uid://bwqjhuluw8fet" path="res://scenes/player.tscn" id="4_lbhrr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_lbhrr"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("3_lbhrr")
@@ -183,7 +185,8 @@ texture = ExtResource("3_lbhrr")
 
 [sub_resource type="TileSet" id="TileSet_p57ef"]
 physics_layer_0/collision_layer = 5
-physics_layer_0/collision_mask = 4
+physics_layer_0/collision_mask = 6
+physics_layer_0/physics_material = SubResource("PhysicsMaterial_lbhrr")
 sources/0 = SubResource("TileSetAtlasSource_iywne")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_lbhrr"]

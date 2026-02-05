@@ -20,6 +20,7 @@ config/icon="uid://8hmc8sgoid6i"
 GlobalLobby="*res://scripts/globalLobby.gd"
 LobbyManager="*res://scripts/lobbyManager.gd"
 SelectManager="*res://scripts/selectManager.gd"
+GlobalMusic="*res://scripts/audioStream.gd"
 
 [input]
 

@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://c6667q7gjr010"]
+[gd_scene load_steps=17 format=3 uid="uid://c6667q7gjr010"]
 
 [ext_resource type="Texture2D" uid="uid://yoh3ik2sqeb5" path="res://assets/images/proyectiles/233.png" id="1_hedj0"]
 [ext_resource type="Script" uid="uid://dkhwi4k1xk8sk" path="res://scripts/balaFuego.gd" id="1_m7gc5"]
+[ext_resource type="AudioStream" uid="uid://bpr21vu3u3pv4" path="res://assets/audio/rayitoFuego.mp3" id="3_4tr3a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7gc5"]
 size = Vector2(28, 11)
@@ -107,3 +108,11 @@ collision_layer = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(-2, -0.5)
 shape = SubResource("RectangleShape2D_4tr3a")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_4tr3a")
+autoplay = true
+bus = &"SFX"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

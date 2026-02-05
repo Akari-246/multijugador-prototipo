@@ -1,5 +1,8 @@
 extends Control
 
+func _ready():
+	GlobalMusic.play_menu()
+
 func _on_btn_steam_pressed() -> void:
 	GlobalLobby.network_type = LobbyManager.NetworkType.STEAM
 	get_tree().change_scene_to_packed(load("res://scenes/lobby.tscn"))
